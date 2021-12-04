@@ -3,6 +3,14 @@ import { useLoaderData, Link } from "remix";
 import type { Joke } from "@prisma/client";
 import { db } from "~/utils/db.server";
 
+export function ErrorBoundary() {
+  return (
+    <div className="error-container">
+      I did a whoopsies.
+    </div>
+  );
+}
+
 type LoaderData = { randomJoke: Joke };
 
 export const loader: LoaderFunction = async () => {
