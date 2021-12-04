@@ -1,15 +1,31 @@
-import type { ActionFunction, LinksFunction } from "remix";
+import type {
+  ActionFunction,
+  LinksFunction,
+  MetaFunction
+} from "remix";
 import {
   useActionData,
   Link,
   useSearchParams
 } from "remix";
 import { db } from "~/utils/db.server";
-import { login, createUserSession, register } from "~/utils/session.server";
+import {
+  createUserSession,
+  login,
+  register
+} from "~/utils/session.server";
 import stylesUrl from "../styles/login.css";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
+};
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Remix Jokes | Login",
+    description:
+      "Login to submit your own jokes to Remix Jokes!"
+  };
 };
 
 function validateUsername(username: unknown) {
@@ -64,10 +80,7 @@ export const action: ActionFunction = async ({
 
   switch (loginType) {
     case "login": {
-      // login to get the user
-      // if there's no user, return the fields and a formError
       const user = await login({ username, password });
-      console.log({ user });
       if (!user) {
         return {
           fields,
